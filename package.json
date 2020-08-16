@@ -1,7 +1,7 @@
 {
-  "name": "phaser3-typescript",
-  "version": "1.4.1",
-  "description": "Boilerplate, Game Examples, Cheat Sheets and Tutorials for Phaser 3 in TypeScript",
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for Phaser 3 in TypeScript",
   "keywords": [
     "Phaser",
     "Phaser 3",
@@ -19,29 +19,18 @@
   ],
   "devDependencies": {
     "expose-loader": "0.7.5",
-    "ts-loader": "6.0.4",
-    "typescript": "3.5.2",
-    "webpack": "4.35.2",
-    "webpack-cli": "3.3.5",
-    "webpack-dev-server": "3.7.2"
+    "ts-loader": "6.2.1",
+    "typescript": "3.7.2",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.9.0"
   },
   "dependencies": {
     "phaser": "3.20.1"
   },
   "scripts": {
-    "start-boilerplate": "cd src/boilerplate && yarn install && yarn run dev",
-    "build-boilerplate": "cd src/boilerplate && yarn install && yarn run build",
     "dev": "webpack --mode development && webpack-dev-server --mode development",
-    "build": "webpack --mode production && webpack-dev-server --mode production",
-    "candy-crush": "cd src/games/candy-crush && yarn install && yarn run dev",
-    "factory-method": "cd patterns/creational-design-patterns/factory-method && yarn install && yarn run dev",
-    "raycasting": "cd src/experimental/raycasting && yarn install && yarn run dev",
-    "untextured-raycaster": "cd src/experimental/untextured-raycaster && yarn install && yarn run dev",
-    "game-of-life": "cd src/experimental/game-of-life && yarn install && yarn run dev",
-    "point-in-polygon": "cd src/experimental/point-in-polygon && yarn install && yarn run dev",
-    "fractal-tree": "cd src/experimental/fractal-tree && yarn install && yarn run dev",
-    "lissajous-curve": "cd src/experimental/lissajous-curve && yarn install && yarn run dev",
-    "procedural-generation": "cd src/experimental/procedural-generation && yarn install && yarn run dev"
+    "build": "webpack --mode production && webpack-dev-server --mode production"
   },
   "repository": {
     "type": "git",
