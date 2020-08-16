@@ -1,11 +1,7 @@
-/**
- * @author       Digitsensitive <digit.sensitivee@gmail.com>
- * @copyright    2018 - 2019 digitsensitive
- * @license      {@link https://github.com/digitsensitive/phaser3-typescript/blob/master/LICENSE.md | MIT License}
- */
+import { Crab } from '../objects/crab'
 
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
+  private crab: Crab;
 
   constructor() {
     super({
@@ -14,10 +10,19 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image("myImage", "../assets/phaser.png");
+    this.load.image("crab", "../assets/crab.png");
+  }
+  create(): void {
+    this.crab = new Crab({
+      scene: this,
+      x: 450,
+      y: 450,
+      key: "crab"
+    });
   }
 
-  create(): void {
-    this.phaserSprite = this.add.sprite(400, 300, "myImage");
+  update(): void {
+    this.crab.update()
   }
+
 }
