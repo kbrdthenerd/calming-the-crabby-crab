@@ -1,4 +1,4 @@
-import { Crab } from '../objects/crab'
+import { Crab, CrabState } from '../objects/crab'
 import crabImageUrl from '../assets/crab.png'
 import backgroundImageUrl from '../assets/background.png'
 import { Scene, Input } from 'phaser'
@@ -42,7 +42,15 @@ export class MainScene extends Scene {
   }
 
   update(): void {
-    this.crab.update()
+    if (this.crab.state === CrabState.Deciding) {
+      if (this.crab.happyLevel <= 0) {
+        this.crab.state = CrabState.Left
+      } else if (this.crab.happyLevel >= .95) {
+        this.crab.state = CrabState.Staying
+      } else {
+        this.crab.update()
+      }
+    }
   }
 
 }
