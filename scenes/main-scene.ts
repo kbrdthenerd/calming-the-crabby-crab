@@ -34,8 +34,10 @@ export class MainScene extends Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     )
     this.comfortKey.on('down', () => {
+      const spike = Math.random() < 0.1
+      const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
       this.comforts.addComfort()
-      this.crab.changeColor(Math.floor(Math.random() * 10))
+      this.crab.changeColor(changeAmount)
     })
   }
 
