@@ -11,6 +11,7 @@
     "webpack-dev-server": "3.9.0"
   },
   "dependencies": {
+    "eslint": "^7.7.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "phaser": "3.20.1",

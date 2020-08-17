@@ -1,25 +1,14 @@
-/**
- * @author       Digitsensitive <digit.sensitivee@gmail.com>
- * @copyright    2018 - 2019 digitsensitive
- * @description  Flappy Bird: Bird
- * @license      Digitsensitive
- */
+import { GameObjects, Input, Display } from 'phaser'
 
-export class Crab extends Phaser.GameObjects.Image {
-  private comfortKey: Phaser.Input.Keyboard.Key
-  private color: Phaser.Display.Color
+export class Crab extends GameObjects.Image {
+  private color: Display.Color
   private happyLevel: number
 
   constructor(params) {
-    super(params.scene, params.x, params.y, params.key, params.frame)
+    const { scene, x, y, key, frame } = params
+    super(scene, x, y, key, frame)
     this.happyLevel = 1
-    this.color = new Phaser.Display.Color(127.5, 0, 127.5)
-    this.comfortKey = this.scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    )
-    this.comfortKey.on('down', () => {
-      this.changeColor(10)
-    })
+    this.color = new Display.Color(128, 0, 127)
 
     const TimerEventConfig = {
       delay: 1000,
@@ -28,9 +17,9 @@ export class Crab extends Phaser.GameObjects.Image {
       callbackScope: this
     }
     
-    this.scene.time.addEvent(TimerEventConfig)
+    scene.time.addEvent(TimerEventConfig)
 
-    this.scene.add.existing(this)
+    scene.add.existing(this)
   }
 
   randomColorChange() {
@@ -48,13 +37,6 @@ export class Crab extends Phaser.GameObjects.Image {
 
   changeColor(amount): void {
     const { color: { red, green, blue } } = this
-    this.color = new Phaser.Display.Color(red + amount, green, Math.max(0, blue - amount))
+    this.color = new Display.Color(red + amount, green, Math.max(0, blue - amount))
   }
 }
-
-
-/** 
-Math notes:
-
-total is always 255, so use a percentage
-*/
