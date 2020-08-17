@@ -1,4 +1,6 @@
 import { Crab } from '../objects/crab'
+import crabImageUrl from '../assets/crab.png'
+import backgroundImageUrl from '../assets/background.png'
 
 export class MainScene extends Phaser.Scene {
   private crab: Crab
@@ -10,8 +12,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image('crab', '../assets/crab.png')
-    this.load.image('background', '../assets/background.png')
+    this.load.image('crab', crabImageUrl)
+    this.load.image('background', backgroundImageUrl)
   }
   create(): void {
     this.add.existing(new Phaser.GameObjects.Image(this, 400, 300, 'background'))
