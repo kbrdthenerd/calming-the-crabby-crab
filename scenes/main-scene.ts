@@ -35,7 +35,7 @@ export class MainScene extends Scene {
     )
     this.comfortKey.on('down', () => {
       this.comforts.addComfort()
-      this.crab.changeColor(10)
+      this.crab.changeColor(Math.floor(Math.random() * 10))
     })
   }
 

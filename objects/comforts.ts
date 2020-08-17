@@ -1,4 +1,4 @@
-import { GameObjects, Input, Display, Game,  } from 'phaser'
+import { GameObjects } from 'phaser'
 
 export class Comforts extends GameObjects.Group {
   private texts: string[]
@@ -10,9 +10,10 @@ export class Comforts extends GameObjects.Group {
   }
 
   addComfort() {
-    const x = Math.floor(Math.random() * 600)
-    const y = Math.floor(Math.random() * 500)
-    const textIndex = Math.floor(Math.random() * this.texts.length)
+    const { floor, random } = Math
+    const x = floor(random() * 600)
+    const y = floor(random() * 500)
+    const textIndex = floor(random() * this.texts.length)
     const text = new GameObjects.Text(this.scene, x, y, this.texts[textIndex],{ 
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
     })
