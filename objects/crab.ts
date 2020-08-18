@@ -9,6 +9,8 @@ export class Crab extends GameObjects.Image {
     super(scene, x, y, key, frame)
     this.happyLevel = 0.3
     this.color = new Display.Color(128, 0, 127)
+    this.tint = this.color.color
+    this.alpha = this.happyLevel
     this.state = CrabState.Deciding
 
     scene.add.existing(this)

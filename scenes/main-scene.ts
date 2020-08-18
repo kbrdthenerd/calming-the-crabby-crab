@@ -56,6 +56,7 @@ export class MainScene extends Scene {
           y: 450,
           key: 'crab'
         })
+        this.crab.start()
         this.tweens.add({
           targets: this.endText,
           alpha: 0,
