@@ -45,8 +45,16 @@ export class MainScene extends Scene {
     if (this.crab.state === CrabState.Deciding) {
       if (this.crab.happyLevel <= 0) {
         this.crab.state = CrabState.Left
+        const text = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab could not be comforted :(',{ 
+          fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+        })
+        this.add.existing(text)
       } else if (this.crab.happyLevel >= .95) {
         this.crab.state = CrabState.Staying
+        const text = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab was Comforted :)',{ 
+          fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+        })
+        this.add.existing(text)
       } else {
         this.crab.update()
       }
