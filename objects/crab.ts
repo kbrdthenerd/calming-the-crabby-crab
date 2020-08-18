@@ -43,7 +43,11 @@ export class Crab extends GameObjects.Image {
 
   changeColor(amount): void {
       const { color: { red, green, blue } } = this
-      this.color = new Display.Color(red + amount, green, Math.max(0, blue - amount))
+      const newBlue = blue - amount
+      const newNewBlue = (newBlue < 0 && 0) || (newBlue > 255 && 255) || newBlue 
+      const newRed = red + amount
+      const newNewRed = (newRed < 0 && 0) || (newRed > 255 && 255) || newRed
+      this.color = new Display.Color(newNewRed, green, newNewBlue)
   }
 }
 
