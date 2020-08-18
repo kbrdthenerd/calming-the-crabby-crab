@@ -11,6 +11,10 @@ export class Crab extends GameObjects.Image {
     this.color = new Display.Color(128, 0, 127)
     this.state = CrabState.Deciding
 
+    scene.add.existing(this)
+  }
+
+  start() {
     const TimerEventConfig = {
       delay: 1000,
       loop: true,
@@ -18,9 +22,7 @@ export class Crab extends GameObjects.Image {
       callbackScope: this
     }
     
-    scene.time.addEvent(TimerEventConfig)
-
-    scene.add.existing(this)
+    this.scene.time.addEvent(TimerEventConfig)
   }
 
   randomColorChange() {

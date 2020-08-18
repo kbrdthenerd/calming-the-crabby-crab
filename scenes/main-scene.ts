@@ -1,13 +1,17 @@
 import { Crab, CrabState } from '../objects/crab'
 import crabImageUrl from '../assets/crab.png'
 import backgroundImageUrl from '../assets/background.png'
-import { Scene, Input } from 'phaser'
+import { Scene, Input, GameObjects } from 'phaser'
 import { Comforts } from '../objects/comforts'
 
 export class MainScene extends Scene {
   private crab: Crab
-  private comfortKey: Input.Keyboard.Key
   private comforts: Comforts
+  private comfortKey: Input.Keyboard.Key
+  private restartKey: Input.Keyboard.Key
+  private gameStarted: boolean
+  private titleText: GameObjects.Text
+  private endText: GameObjects.Text
 
   constructor() {
     super({
@@ -21,7 +25,12 @@ export class MainScene extends Scene {
   }
 
   create(): void {
+    this.gameStarted = false
     this.add.existing(new Phaser.GameObjects.Image(this, 400, 300, 'background'))
+    this.titleText = new GameObjects.Text(this, 20, 20, 'Comfort the Crab',{ 
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+    })
+    this.add.existing(this.titleText)
     this.crab = new Crab({
       scene: this,
       x: 450,
@@ -33,28 +42,60 @@ export class MainScene extends Scene {
     this.comfortKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     )
+
+    this.restartKey = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    )
+
+    this.restartKey.on('down', () => {
+      if (this.crab.state !== CrabState.Deciding) {
+        this.crab.destroy()
+        this.crab = new Crab({
+          scene: this,
+          x: 450,
+          y: 450,
+          key: 'crab'
+        })
+        this.tweens.add({
+          targets: this.endText,
+          alpha: 0,
+          duration: 1000,
+        })
+      }
+    })
+
     this.comfortKey.on('down', () => {
-      const spike = Math.random() < 0.1
-      const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
-      this.comforts.addComfort()
-      this.crab.changeColor(changeAmount)
+      if (!this.gameStarted) {
+        this.gameStarted = true
+        this.crab.start()
+        this.tweens.add({
+          targets: this.titleText,
+          alpha: 0,
+          duration: 1000,
+        })
+      } else {
+        const spike = Math.random() < 0.1
+        const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
+        this.comforts.addComfort()
+        this.crab.changeColor(changeAmount)
+      }
     })
   }
 
   update(): void {
-    if (this.crab.state === CrabState.Deciding) {
+    if (this.gameStarted && (this.crab.state === CrabState.Deciding)) {
       if (this.crab.happyLevel <= 0) {
         this.crab.state = CrabState.Left
-        const text = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab could not be comforted :(',{ 
+        this.endText = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab could not be comforted :( Press enter to try again',{ 
           fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
         })
-        this.add.existing(text)
+        this.add.existing(this.endText)
       } else if (this.crab.happyLevel >= .95) {
         this.crab.state = CrabState.Staying
-        const text = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab was Comforted :)',{ 
+        this.endText = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab was Comforted :) Press enter to play again',{ 
           fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
         })
-        this.add.existing(text)
+        this.add.existing(this.endText)
       } else {
         this.crab.update()
       }
