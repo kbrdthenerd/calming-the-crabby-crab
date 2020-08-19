@@ -1,7 +1,8 @@
 import { Crab, CrabState } from '../objects/crab'
-import crabImageUrl from '../assets/crab.png'
+import crabImageUrl from '../assets/Crab-1.png'
+import crabEyeImageUrl from '../assets/Crab-1-eyes.png'
 import backgroundImageUrl from '../assets/fancyBackground.png'
-import { Scene, Input, GameObjects } from 'phaser'
+import { Scene, Input } from 'phaser'
 import { Comforts } from '../objects/comforts'
 import { Intro } from '../objects/intro'
 import { End } from '../objects/end'
@@ -23,6 +24,7 @@ export class MainScene extends Scene {
 
   preload(): void {
     this.load.image('crab', crabImageUrl)
+    this.load.image('crabEyes', crabEyeImageUrl)
     this.load.image('background', backgroundImageUrl)
   }
 
@@ -47,7 +49,7 @@ export class MainScene extends Scene {
 
     this.restartKey.on('down', () => {
       if (this.crab.state !== CrabState.Deciding) {
-        this.crab.destroy()
+        this.crab.remove()
         this.crab = new Crab({ scene: this })
         this.crab.start()
         this.endText.fade()

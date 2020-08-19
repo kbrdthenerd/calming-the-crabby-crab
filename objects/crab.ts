@@ -2,20 +2,26 @@ import { GameObjects, Input, Display } from 'phaser'
 
 export class Crab extends GameObjects.Image {
   private color: Display.Color
+  private eyes: GameObjects.Image
   public happyLevel: number
 
   constructor(params) {
     const { scene } = params
-    super(scene, 550, 500, 'crab')
-    this.displayHeight = 125
+    super(scene, 550, 475, 'crab')
+    this.displayHeight = 261.8
     this.displayWidth = 350
-    this.happyLevel = 0.3
+    this.happyLevel = 0.4
     this.color = new Display.Color(128, 0, 127)
     this.tint = this.color.color
     this.alpha = this.happyLevel
     this.state = CrabState.Deciding
+    this.eyes = new GameObjects.Image(scene, 550, 475, 'crabEyes')
+    this.eyes.alpha = this.happyLevel
+    this.eyes.displayHeight = 261.8
+    this.eyes.displayWidth = 350
 
     scene.add.existing(this)
+    scene.add.existing(this.eyes)
   }
 
   start() {
@@ -46,8 +52,14 @@ export class Crab extends GameObjects.Image {
     } else if (Math.abs(red - blue) < 50 && this.happyLevel < 1) this.happyLevel+= 0.001
     this.tint = this.color.color
     this.alpha = this.happyLevel
+    this.eyes.alpha = this.happyLevel
 }
 
+
+  remove() {
+    this.eyes.destroy()
+    this.destroy()
+  }
 
   changeColor(amount): void {
       const { color: { red, green, blue } } = this
