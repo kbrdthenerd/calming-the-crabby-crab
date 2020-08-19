@@ -15,7 +15,7 @@ export class Comforts extends GameObjects.Group {
     const y = floor(random() * 500)
     const textIndex = floor(random() * this.texts.length)
     const text = new GameObjects.Text(this.scene, x, y, this.texts[textIndex],{ 
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff', fontSize: '25px'
     })
     this.add(text, true)
     this.scene.tweens.add({

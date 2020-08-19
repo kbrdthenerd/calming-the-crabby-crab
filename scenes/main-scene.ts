@@ -63,12 +63,11 @@ export class MainScene extends Scene {
         this.gameStarted = true
         this.crab.start()
         this.introText.fade()
-      } else {
-        const spike = Math.random() < 0.1
-        const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
-        this.comforts.addComfort()
-        this.crab.changeColor(changeAmount)
       }
+      const spike = Math.random() < 0.1
+      const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
+      this.comforts.addComfort()
+      this.crab.changeColor(changeAmount)
     })
   }
 
