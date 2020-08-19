@@ -3,6 +3,7 @@ import crabImageUrl from '../assets/crab.png'
 import backgroundImageUrl from '../assets/background.png'
 import { Scene, Input, GameObjects } from 'phaser'
 import { Comforts } from '../objects/comforts'
+import { Intro } from '../objects/intro'
 
 export class MainScene extends Scene {
   private crab: Crab
@@ -10,7 +11,7 @@ export class MainScene extends Scene {
   private comfortKey: Input.Keyboard.Key
   private restartKey: Input.Keyboard.Key
   private gameStarted: boolean
-  private titleText: GameObjects.Text
+  private introText: Intro
   private endText: GameObjects.Text
 
   constructor() {
@@ -27,10 +28,7 @@ export class MainScene extends Scene {
   create(): void {
     this.gameStarted = false
     this.add.existing(new Phaser.GameObjects.Image(this, 400, 300, 'background'))
-    this.titleText = new GameObjects.Text(this, 20, 20, 'Comfort the Crab',{ 
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
-    })
-    this.add.existing(this.titleText)
+    this.introText = new Intro({ scene: this })
     this.crab = new Crab({
       scene: this,
       x: 450,
@@ -69,11 +67,7 @@ export class MainScene extends Scene {
       if (!this.gameStarted) {
         this.gameStarted = true
         this.crab.start()
-        this.tweens.add({
-          targets: this.titleText,
-          alpha: 0,
-          duration: 1000,
-        })
+        this.introText.fade()
       } else {
         const spike = Math.random() < 0.1
         const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
