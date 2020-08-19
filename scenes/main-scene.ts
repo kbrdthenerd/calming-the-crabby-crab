@@ -1,9 +1,10 @@
 import { Crab, CrabState } from '../objects/crab'
 import crabImageUrl from '../assets/crab.png'
-import backgroundImageUrl from '../assets/background.png'
+import backgroundImageUrl from '../assets/fancyBackground.png'
 import { Scene, Input, GameObjects } from 'phaser'
 import { Comforts } from '../objects/comforts'
 import { Intro } from '../objects/intro'
+import { End } from '../objects/end'
 
 export class MainScene extends Scene {
   private crab: Crab
@@ -12,7 +13,7 @@ export class MainScene extends Scene {
   private restartKey: Input.Keyboard.Key
   private gameStarted: boolean
   private introText: Intro
-  private endText: GameObjects.Text
+  private endText: End
 
   constructor() {
     super({
@@ -27,14 +28,12 @@ export class MainScene extends Scene {
 
   create(): void {
     this.gameStarted = false
-    this.add.existing(new Phaser.GameObjects.Image(this, 400, 300, 'background'))
+    const background = new Phaser.GameObjects.Image(this, 400, 300, 'background')
+    background.displayHeight = 600
+    background.displayWidth = 800
+    this.add.existing(background)
     this.introText = new Intro({ scene: this })
-    this.crab = new Crab({
-      scene: this,
-      x: 450,
-      y: 450,
-      key: 'crab'
-    })
+    this.crab = new Crab({ scene: this })
     this.comforts = new Comforts({ scene: this })
 
     this.comfortKey = this.input.keyboard.addKey(
@@ -55,11 +54,7 @@ export class MainScene extends Scene {
           key: 'crab'
         })
         this.crab.start()
-        this.tweens.add({
-          targets: this.endText,
-          alpha: 0,
-          duration: 1000,
-        })
+        this.endText.fade()
       }
     })
 
@@ -81,16 +76,10 @@ export class MainScene extends Scene {
     if (this.gameStarted && (this.crab.state === CrabState.Deciding)) {
       if (this.crab.happyLevel <= 0) {
         this.crab.state = CrabState.Left
-        this.endText = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab could not be comforted :( Press enter to try again',{ 
-          fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
-        })
-        this.add.existing(this.endText)
+        this.endText = new End({ scene: this, won: false })
       } else if (this.crab.happyLevel >= .95) {
         this.crab.state = CrabState.Staying
-        this.endText = new Phaser.GameObjects.Text(this, 100, 100, 'The Crab was Comforted :) Press enter to play again',{ 
-          fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
-        })
-        this.add.existing(this.endText)
+        this.endText = new End({ scene: this, won: true })
       } else {
         this.crab.update()
       }

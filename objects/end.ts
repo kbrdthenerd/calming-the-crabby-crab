@@ -1,17 +1,18 @@
 import { GameObjects } from 'phaser'
 
-export class Intro extends GameObjects.Group {
+export class End extends GameObjects.Group {
 
   constructor(params) {
-    const { scene } = params
+    const { scene, won } = params
     super(scene)
-    const titleText = new GameObjects.Text(scene, 50, 50, 'Comfort the Crab',{ 
+    const resultCopy = (won && 'The Crab was comforted')  || 'The Crab could not be comforted'
+    const resultText = new GameObjects.Text(scene, 50, 50, resultCopy,{ 
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff', fontSize: '30px'
     })
-    const descriptionText =  new GameObjects.Text(scene, 50, 100, 'Press space to comfort',{ 
+    const tryAgainText =  new GameObjects.Text(scene, 50, 100, 'Press enter to play again',{ 
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
     })
-    this.addMultiple([titleText, descriptionText], true)
+    this.addMultiple([resultText, tryAgainText], true)
   }
 
   fade() {

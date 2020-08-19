@@ -5,8 +5,10 @@ export class Crab extends GameObjects.Image {
   public happyLevel: number
 
   constructor(params) {
-    const { scene, x, y, key, frame } = params
-    super(scene, x, y, key, frame)
+    const { scene } = params
+    super(scene, 550, 500, 'crab')
+    this.displayHeight = 125
+    this.displayWidth = 350
     this.happyLevel = 0.3
     this.color = new Display.Color(128, 0, 127)
     this.tint = this.color.color
