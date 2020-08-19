@@ -11,7 +11,13 @@ export class Intro extends GameObjects.Group {
     const descriptionText =  new GameObjects.Text(scene, 50, 100, 'Press space to comfort',{ 
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
     })
-    this.addMultiple([titleText, descriptionText], true)
+    const myCredit =  new GameObjects.Text(scene, 20, 560, 'Design & Programming by Katherine Brennan',{ 
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+    })
+    const lisaCredit =  new GameObjects.Text(scene, 20, 540, 'Art by Lisa Luebbert',{ 
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff' 
+    })
+    this.addMultiple([titleText, descriptionText, myCredit, lisaCredit], true)
   }
 
   fade() {
