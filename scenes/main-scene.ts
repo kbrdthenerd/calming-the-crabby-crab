@@ -28,10 +28,12 @@ export class MainScene extends Scene {
 
   create(): void {
     this.gameStarted = false
+
     const background = new Phaser.GameObjects.Image(this, 400, 300, 'background')
     background.displayHeight = 600
     background.displayWidth = 800
     this.add.existing(background)
+
     this.introText = new Intro({ scene: this })
     this.crab = new Crab({ scene: this })
     this.comforts = new Comforts({ scene: this })
@@ -39,7 +41,6 @@ export class MainScene extends Scene {
     this.comfortKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     )
-
     this.restartKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     )
@@ -47,27 +48,19 @@ export class MainScene extends Scene {
     this.restartKey.on('down', () => {
       if (this.crab.state !== CrabState.Deciding) {
         this.crab.destroy()
-        this.crab = new Crab({
-          scene: this,
-          x: 450,
-          y: 450,
-          key: 'crab'
-        })
+        this.crab = new Crab({ scene: this })
         this.crab.start()
         this.endText.fade()
       }
     })
-
     this.comfortKey.on('down', () => {
       if (!this.gameStarted) {
         this.gameStarted = true
         this.crab.start()
         this.introText.fade()
       }
-      const spike = Math.random() < 0.1
-      const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
       this.comforts.addComfort()
-      this.crab.changeColor(changeAmount)
+      this.crab.comfort()
     })
   }
 

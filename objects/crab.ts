@@ -33,6 +33,12 @@ export class Crab extends GameObjects.Image {
     this.changeColor(-(Math.floor(Math.random() * 10) + 5))
   }
 
+  comfort() {
+    const spike = Math.random() < 0.1
+    const changeAmount = (spike && Math.floor(Math.random() * 50) + 40) || Math.floor(Math.random() * 10) + 5
+    this.changeColor(changeAmount)
+  }
+
   update(): void {
     const { color: { red, blue } } = this
     if (Math.abs(red - blue) > 50 && this.happyLevel > 0) { 
