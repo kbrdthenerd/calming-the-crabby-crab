@@ -1,8 +1,9 @@
-import { GameObjects, Input, Display } from 'phaser'
+import { GameObjects, Display } from 'phaser'
 
 export class Crab extends GameObjects.Image {
   private color: Display.Color
   private eyes: GameObjects.Image
+  private encourageText: GameObjects.Text
   public happyLevel: number
 
   constructor(params) {
@@ -19,6 +20,12 @@ export class Crab extends GameObjects.Image {
     this.eyes.alpha = this.happyLevel
     this.eyes.displayHeight = 261.8
     this.eyes.displayWidth = 350
+
+    this.encourageText = new GameObjects.Text(scene, 620, 400, 'Please don\'t give up on me',{ 
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ffffff', fontSize: '12px'
+    })
+    this.encourageText.alpha = 0
+    scene.add.existing(this.encourageText)
 
     scene.add.existing(this)
     scene.add.existing(this.eyes)
@@ -53,7 +60,17 @@ export class Crab extends GameObjects.Image {
     this.tint = this.color.color
     this.alpha = this.happyLevel
     this.eyes.alpha = this.happyLevel
-}
+    if (this.happyLevel <= 0.2 && this.happyLevel > 0) {
+      this.encourageText.text = (red - blue > 0 && 'I need some space') || 'Please don\'t give up on me'
+      this.encourageText.alpha = 1
+    } else {
+      this.scene.tweens.add({
+        targets: this.encourageText,
+        alpha: 0,
+        duration: 1000,
+      })
+    }
+  }
 
 
   remove() {
