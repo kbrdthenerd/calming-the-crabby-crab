@@ -6,7 +6,7 @@ export class Comforts extends GameObjects.Group {
   constructor(params) {
     const { scene } = params
     super(scene)
-    this.texts = ['It\'ll be ok', 'I\'m here if you need me']
+    this.texts = ['It\'ll be ok', 'I\'m here if you need me', 'Things will get better', 'Keep going, you can do it']
   }
 
   addComfort() {
